@@ -1,60 +1,35 @@
-import subprocess
-
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# Statik dosyalar için klasör yapılandırması
-app.config['STATIC_FOLDER'] = 'static'
-app.config['STATIC_URL_PATH'] = '/static'
-
-@app.route('/main')
+@app.route('/')
 def ana_sayfa():
+    # Oyun verileri (şimdilik basit olarak bir sözlük içinde)
     oyunlar = [
-        {"ad": "2048", "resim": "2048-game.png", "detaylar": "2048 oyunu hakkında detaylar...", "link": "#"},
-        {"ad": "Angry Birds", "resim": "angrybirds.jpeg", "detaylar": "Angry Birds oyunu hakkında detaylar...",
-         "link": "#"},
-        {"ad": "Connect-4", "resim": "connect4.jpeg", "detaylar": "Connect-4 oyunu hakkında detaylar...", "link": "#"},
-        {"ad": "Flappy Bird", "resim": "flappy bird.jpeg", "detaylar": "Flappy Bird oyunu hakkında detaylar...",
-         "link": "#"},
-        {"ad": "RememberMe", "resim": "rememberme.jpg", "detaylar": "RememberMe oyunu hakkında detaylar...",
-         "link": "#"},
-        {"ad": "Sudoku", "resim": "sudoku_logo.png", "detaylar": "Sudoku oyunu hakkında detaylar...", "link": "#"},
+        {"ad": "2048", "resim": "2048-game.png",
+         "detaylar": "2048, sayıları hareket ettirerek 2048'i elde etmeye çalıştığınız bağımlılık yaratan bir bulmaca oyunudur.",
+         "link": "/oyna/2048"},
+        {"ad": "Angry Birds", "resim": "angrybirds.jpeg",
+         "detaylar": "Angry Birds, kuşların domuzlara karşı savaştığı eğlenceli bir fizik tabanlı bulmaca oyunudur.",
+         "link": "/oyna/angry-birds"},
+        {"ad": "Connect-4", "resim": "connect4.jpeg",
+         "detaylar": "Connect-4, sıranızı kullanarak dört parçayı dikey, yatay veya çapraz olarak birleştirmeye çalıştığınız bir strateji oyunudur.",
+         "link": "/oyna/connect-4"},
+        {"ad": "Flappy Bird", "resim": "flappy bird.jpeg",
+         "detaylar": "Flappy Bird, engeller arasından uçarak puan kazandığınız basit ve bağımlılık yaratan bir oyunudur.",
+         "link": "/oyna/flappy-bird"},
+        {"ad": "RememberMe", "resim": "rememberme.jpg",
+         "detaylar": "RememberMe, hafızanızı test etmek için kartları eşleştirdiğiniz bir hafıza oyunudur.",
+         "link": "/oyna/rememberme"},
+        {"ad": "Sudoku", "resim": "sudoku_logo.png",
+         "detaylar": "Sudoku, sayılarla dolu bir kareyi doldururken mantık ve strateji kullanmanızı gerektiren bir bulmaca oyunudur.",
+         "link": "/oyna/sudoku"},
         {"ad": "Super Mario Brothers", "resim": "supermario.jpg",
-         "detaylar": "Super Mario Brothers oyunu hakkında detaylar...", "link": "#"}
+         "detaylar": "Super Mario Brothers, Mario'nun maceralarını yaşadığı klasik bir platform oyunudur.",
+         "link": "/oyna/super-mario-brothers"}
     ]
+
     return render_template('index.html', oyunlar=oyunlar)
-
-
-@app.route('/oyna/2048')
-def oyna_2048():
-    subprocess.run(['python', 'C:\\Users\\90541\\PycharmProjects\\OyunSkor\\2048 Oyunu\\2048.py'])
-    return redirect(url_for('ana_sayfa'))
-
-
-@app.route('/oyna/angry-birds')
-def oyna_angry_birds():
-    subprocess.run(['python', 'C:\\Users\\90541\\PycharmProjects\\OyunSkor\\Angry Birds\\sourcecode\\Angry Birds.py'])
-    return redirect(url_for('ana_sayfa'))
-
-
-@app.route('/oyna/connect-4')
-def oyna_connect_4():
-    subprocess.run(['python', 'C:\\Users\\90541\\PycharmProjects\\OyunSkor\\Connect-4\\connect4.py'])
-    return redirect(url_for('ana_sayfa'))
-
-
-@app.route('/oyna/flappy-bird')
-def oyna_flappy_bird():
-    subprocess.run(['python', 'C:\\Users\\90541\\PycharmProjects\\OyunSkor\\Flappy Bird\\final\\FlappyBird.py'])
-    return redirect(url_for('ana_sayfa'))
-
-
-@app.route('/oyna/sudoku')
-def oyna_sudoku():
-    subprocess.run(['python', 'C:\\Users\\90541\\PycharmProjects\\OyunSkor\\Sudoku\\sudoku.py'])
-    return redirect(url_for('ana_sayfa'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

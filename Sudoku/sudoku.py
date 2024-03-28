@@ -1,8 +1,6 @@
 import turtle
 import random
 
-
-# --------------- Made this function to set our coordinates and environment whenever we play ------------- #
 def setWorld():
     turtle.setworldcoordinates(-100, -100, 100, 100)
     turtle.hideturtle()
@@ -12,7 +10,7 @@ def setWorld():
     turtle.goto(-75, -75)
 
 
-# ------------ A function to draw the outer large square ------------- #
+# ------------ DIŞ KARE ------------- #
 def drawGrid():
     for i in range(2):
         turtle.fd(150)
@@ -21,7 +19,6 @@ def drawGrid():
         turtle.lt(90)
 
 
-# ------------ A function to draw squares within the grid ---------#
 def drawSquare():
     for i in range(2):
         turtle.fd(37.5)
@@ -30,7 +27,6 @@ def drawSquare():
         turtle.lt(90)
 
 
-# ------------- A function to keep drawing squares and moving forward until it reaches a specific x-coordinate --------#
 def move_turtle():
     turtle.pd()
     while not (turtle.xcor() >= 75):
@@ -80,7 +76,7 @@ def eraseEntry(puzzle):
     ask_user = turtle.textinput('', 'Do you want to erase the previous entry? (y/n)')
     if ask_user in ['y', 'YES', 'yes']:
         eraser.goto(turtle.xcor() + 5,
-                    turtle.ycor())  # I had to adjust where the eraser goes accordingly. By trial and error I just had to move it a bit
+                    turtle.ycor())
         eraser.pd()  # to the right.
         eraser.color('white', 'white')
         eraser.begin_fill()
@@ -101,11 +97,11 @@ def take_input(puzzle):
     y_cor = 0
 
     for r in range(0, len(grid_rows)):
-        if grid_rows[r] == user_input[0]:  # First 'element' of the user's input will be the row. E.g B1
+        if grid_rows[r] == user_input[0]:  # ilk alınan inout satır
             y_cor = row_increment_size[r]
 
     for c in range(0, len(grid_cols)):
-        if grid_cols[c] == user_input[1]:  # Second 'element' of the user's input will be the column.
+        if grid_cols[c] == user_input[1]:  # ikinci alınan sütun
             x_cor = col_increment_size[c]
 
     turtle.goto(x_cor, y_cor)

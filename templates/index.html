@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OyunSkor</title>
+    <title>OYUN SKOR</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
-            position: relative;
-            margin-bottom: 100px; /* Sayfanın altından 100 piksel boşluk bırak */
         }
 
         .oyun {
@@ -60,15 +58,6 @@
         .oyun .btn-primary:hover {
             background-color: #0056b3;
         }
-
-        /* Yukarı Çık butonu */
-        .yukari-cik {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -83,37 +72,8 @@
                         <h5 class="card-title">{{ oyun['ad'] }}</h5>
                         <p class="card-text">{{ oyun['detaylar'] }}</p>
                         <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#oyunDetayModal{{ loop.index }}">İncele</button>
+                            <a href="{{ oyun['link'] }}" class="btn btn-primary">İncele</a>
                             <a href="{{ oyun['link'] }}" class="btn btn-outline-primary">Oyna</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="oyunDetayModal{{ loop.index }}" tabindex="-1" aria-labelledby="oyunDetayModalLabel{{ loop.index }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="oyunDetayModalLabel{{ loop.index }}">{{ oyun['ad'] }} Detayları</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {% if oyun['ad'] == '2048' %}
-                            <p>2048, kaydırma tabanlı bir bulmaca oyunudur. Aynı numaralı tuğlaları birleştirerek 2048 tuğlasını elde etmeye çalışırsınız.</p>
-                            {% elif oyun['ad'] == 'Angry Birds' %}
-                            <p>Angry Birds, kuşların domuzlara saldırması temalı bir fizik tabanlı bulmaca oyunudur.</p>
-                            {% elif oyun['ad'] == 'Connect 4' %}
-                            <p>Connect 4, sıra tabanlı bir strateji oyunudur. 4 token'ı yatay, dikey veya çapraz olarak birleştirerek kazanmaya çalışırsınız.</p>
-                            {% elif oyun['ad'] == 'Flappy Bird' %}
-                            <p>Flappy Bird, tünel şeklindeki engellerden geçmeye çalışırken bir kuşu kontrol ettiğiniz bir oyun.</p>
-                            {% elif oyun['ad'] == 'RememberMe' %}
-                            <p>RememberMe, hafıza temelli bir oyun olup eşleştirme oyunudur. Çift kartları eşleştirmeye çalışırsınız.</p>
-                            {% elif oyun['ad'] == 'Sudoku' %}
-                            <p>Sudoku, bir bulmaca oyunudur. 9x9 ızgaradaki her sütun, satır ve 3x3 bölgede 1'den 9'a kadar olan rakamları tek bir kez kullanarak doldurmaya çalışırsınız.</p>
-                            {% elif oyun['ad'] == 'Super Mario Brothers' %}
-                            <p>Super Mario Brothers, platform türünde bir video oyunudur. Mario'nun prensesi kurtarmak için maceralarla dolu bir dünyada yolculuk ettiği bir oyundur.</p>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -121,28 +81,6 @@
             {% endfor %}
         </div>
     </div>
-
-    <button class="btn btn-primary yukari-cik" onclick="scrollTopAnimated()">Yukarı Çık</button>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.querySelector('.yukari-cik').style.display = "block";
-            } else {
-                document.querySelector('.yukari-cik').style.display = "none";
-            }
-        }
-
-        function scrollTopAnimated() {
-            const c = document.documentElement.scrollTop || document.body.scrollTop;
-            if (c > 0) {
-                window.requestAnimationFrame(scrollTopAnimated);
-                window.scrollTo(0, c - c / 8);
-            }
-        }
-    </script>
 </body>
 </html>

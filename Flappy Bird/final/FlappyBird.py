@@ -64,9 +64,10 @@ class Bird(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
         self.vel = 0
-        self.clicked = False
 
     def update(self):
+        global flying
+        global game_over
 
         if flying == True:
             # apply gravity
@@ -77,13 +78,6 @@ class Bird(pygame.sprite.Sprite):
                 self.rect.y += int(self.vel)
 
         if game_over == False:
-            # jump
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                self.vel = -10
-            if pygame.mouse.get_pressed()[0] == 0:
-                self.clicked = False
-
             # handle the animation
             flap_cooldown = 5
             self.counter += 1
@@ -216,7 +210,9 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and flying == False and game_over == False:
+        # Handle spacebar press
+        elif event.type == KEYDOWN and event.key == K_SPACE and game_over == False:
+            flappy.vel = -10  # Kuşun hızını ayarla
             flying = True
 
     pygame.display.update()
