@@ -22,6 +22,7 @@ def main():
         ("2048 Oyunu","2048.py"),
         ("Sudoku","Sudoku.py"),
         ("Flappy Bird","FlappyBird.py"),
+        ("Angry Birds" , "")
     ]
 
     # Butonları düzenli bir şekilde yerleştirelim
@@ -36,6 +37,6 @@ if __name__ == "__main__":
         import numpy
         import pygame
     except ImportError:
-        print("Gerekli modül(numpy) yüklenemedi.")
+        print("Gerekli modül(numpy ve pygame) yüklenemedi.")
     else:
         main()
