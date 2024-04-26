@@ -134,7 +134,7 @@ def distance(xo, yo, x, y):
 
 def load_music():
     """Load the music"""
-    song1 = 'C:/Users/90541/PycharmProjects/OyunSkor/img/angry-birds.ogg'
+    song1 = 'C:/Users/90541/PycharmProjects/OyunSkor/img/OyunMuzikleri/angry-birds.ogg'
     pygame.mixer.music.load(song1)
     pygame.mixer.music.play(-1)
 

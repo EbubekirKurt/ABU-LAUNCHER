@@ -13,7 +13,7 @@ def main():
     root.geometry("750x750")
 
     # Başlık için yeni bir font ve büyük boyut
-    title_label = tk.Label(root, text="Oyun Launcher", font=("Helvetica", 20))
+    title_label = tk.Label(root, text="MULTIGAME LAUNCHER ATARI by Ebubekir Kurt", font=("Helvetica", 20))
     title_label.pack(pady=10)
 
     games = [
@@ -25,10 +25,17 @@ def main():
         ("Angry Birds", "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py")
     ]
 
-    # Butonları düzenli bir şekilde yerleştirelim
-    for game_name, game_file in games:
-        button = tk.Button(root, text=game_name, command=lambda file=game_file: run_game(file), width=20, height=2)
-        button.pack(pady=5)
+    # Butonları 2 sıra ve her sırada 3'er tane olacak şekilde düzenli bir şekilde yerleştirdik
+    for i in range(0, len(games), 3):
+        frame = tk.Frame(root)
+        frame.pack()
+
+        for j in range(3):
+            index = i + j
+            if index < len(games):
+                game_name, game_file = games[index]
+                button = tk.Button(frame, text=game_name, command=lambda file=game_file: run_game(file), width=20, height=2)
+                button.grid(row=i, column=j, padx=10, pady=5)
 
     root.mainloop()
 

@@ -1,4 +1,6 @@
-numpy~=1.26.4
 pygame~=2.5.2
-Flask~=3.0.2
 constants~=0.6.0
+numpy~=1.26.4
+polygon~=1.2.0
+pymunk~=6.6.0
+customtkinter~=5.2.2
