@@ -323,9 +323,6 @@ class Level():
         if self.bool_space:
             self.number_of_birds = 8
 
-
-    #def build_12
-
     def load_level(self):
         try:
             build_name = "build_"+str(self.number)
