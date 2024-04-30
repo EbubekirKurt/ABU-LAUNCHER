@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import subprocess
 
 # Kullanıcı adı ve şifre bilgileri
 user_credentials = {
@@ -15,7 +16,7 @@ image_paths = [
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/supermario.jpg"
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png"
 ]
 
 def login():
@@ -31,13 +32,41 @@ def login():
 
 
 def play_button_clicked(image_index):
-    print(f"PLAY button clicked for image {image_index + 1}!")
-    # Launcher burada yüklensin
+    if image_index == 0:  # 2048 oyununun indeksi
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"])
+    elif image_index == 1:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"])
+    elif image_index == 2:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"])
+    elif image_index == 3:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"])
+    elif image_index == 4:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"])
+    elif image_index == 5:
+        print("Daha sonra eklenecek : Remember Me oyunu")
+    elif image_index == 6:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"])
+    elif image_index == 7:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"])
+    else:
+        print("Daha sonra abicim hadi")
+
 
 def show_images_with_play_buttons():
     # Create the main window
     root = tk.Tk()
     root.title("Game Console")
+
+    # Welcome label
+    welcome_label = tk.Label(root, text="Hoşgeldin. Oynamak istediğin oyunu seç.", font=("Helvetica", 14))
+    welcome_label.pack(pady=(10, 20))
 
     # Create a frame to hold the images and buttons
     frame = tk.Frame(root)
