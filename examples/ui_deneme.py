@@ -12,12 +12,15 @@ image_paths = [
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4against.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
     "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png"
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/willbeaddedlaterimage.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/willbeaddedlaterimage.png",
 
 ]
 
@@ -60,6 +63,9 @@ def play_button_clicked(image_index):
     elif image_index == 8:
         subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
                           "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"])
+    elif image_index == 9:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/examples/Pong.py"])
     else:
         print("Daha sonra abicim hadi")
 
@@ -108,7 +114,7 @@ def show_images_with_play_buttons():
     screen_height = root.winfo_screenheight()
     x = (screen_width - (200 * num_columns)) // 2
     y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 2))) // 2
-    root.geometry(f"{200 * num_columns + 10}x{200 * ((len(image_paths) + num_columns - 1) // num_columns * 2)}+{x}+{y}")
+    root.geometry("900x850")
 
     # Run the Tkinter event loop
     root.mainloop()
