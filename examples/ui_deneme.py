@@ -65,7 +65,7 @@ def play_button_clicked(image_index):
                           "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"])
     elif image_index == 9:
         subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
-                          "C:/Users/90541/PycharmProjects/OyunSkor/examples/Pong.py"])
+                          "C:/Users/90541/PycharmProjects/OyunSkor/Pong.py"])
     else:
         print("Daha sonra abicim hadi")
 
