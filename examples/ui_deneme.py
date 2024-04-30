@@ -12,11 +12,13 @@ image_paths = [
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4against.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
     "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png"
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png"
+
 ]
 
 def login():
@@ -55,6 +57,9 @@ def play_button_clicked(image_index):
     elif image_index == 7:
         subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
                           "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"])
+    elif image_index == 8:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"])
     else:
         print("Daha sonra abicim hadi")
 

@@ -75,6 +75,9 @@ class Level():
         p = (980, 240)
         self.beams.append(Polygon(p, 85, 20, self.space))
         self.number_of_birds = 4
+
+        self.vertical_pile(1255, 0, 5)
+
         if self.bool_space:
             self.number_of_birds = 8
         self.one_star = 30000
