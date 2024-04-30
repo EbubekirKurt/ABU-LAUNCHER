@@ -4,3 +4,4 @@ numpy~=1.26.4
 polygon~=1.2.0
 pymunk~=6.6.0
 customtkinter~=5.2.2
+pillow~=10.3.0
