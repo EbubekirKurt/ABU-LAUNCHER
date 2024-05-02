@@ -1,49 +1,145 @@
 import tkinter as tk
+from PIL import Image, ImageTk
 import subprocess
-import sys
 
-def run_game(game_file):
-    subprocess.Popen([sys.executable, game_file])
+# Kullanıcı adı ve şifre bilgileri
+user_credentials = {
+    "username": "user",
+    "password": "123"
+}
 
-def main():
+image_paths = [
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/willbeaddedlaterimage.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/willbeaddedlaterimage.png",
+
+]
+
+def login():
+    username = username_entry.get()
+    password = password_entry.get()
+
+    if username == user_credentials["username"] and password == user_credentials["password"]:
+        login_window.destroy()  # Giriş penceresini kapat
+        show_images_with_play_buttons()  # Menü ekranını göster
+    else:
+        # Hatalı giriş uyarısı
+        error_label.config(text="Invalid username or password")
+
+
+def play_button_clicked(image_index):
+    if image_index == 0:  # 2048 oyununun indeksi
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"])
+    elif image_index == 1:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"])
+    elif image_index == 2:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"])
+    elif image_index == 3:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"])
+    elif image_index == 4:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"])
+    elif image_index == 5:
+        print("Daha sonra eklenecek : Remember Me oyunu")
+    elif image_index == 6:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"])
+    elif image_index == 7:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"])
+    elif image_index == 8:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"])
+    elif image_index == 9:
+        subprocess.Popen(["C:/Users/90541/PycharmProjects/OyunSkor/.venv/Scripts/python.exe",
+                          "C:/Users/90541/PycharmProjects/OyunSkor/Pong.py"])
+    else:
+        print("Daha sonra abicim hadi")
+
+
+def show_images_with_play_buttons():
+    # Create the main window
     root = tk.Tk()
-    root.title("Oyun Launcher")
+    root.title("Game Console")
 
-    # Pencere boyutunu ayarlayalım
-    root.geometry("750x750")
+    # Welcome label
+    welcome_label = tk.Label(root, text="Hoşgeldin. Oynamak istediğin oyunu seç.", font=("Helvetica", 14))
+    welcome_label.pack(pady=(10, 20))
 
-    # Başlık için yeni bir font ve büyük boyut
-    title_label = tk.Label(root, text="MULTIGAME LAUNCHER ATARI by Ebubekir Kurt", font=("Helvetica", 20))
-    title_label.pack(pady=10)
+    # Create a frame to hold the images and buttons
+    frame = tk.Frame(root)
+    frame.pack(padx=10, pady=10)
 
-    games = [
-        ("Connect 4", "connect4.py"),
-        ("Connect 4 against AI", "connect4withai.py"),
-        ("2048 Oyunu","2048.py"),
-        ("Sudoku","Sudoku.py"),
-        ("Flappy Bird","FlappyBird.py"),
-        ("Angry Birds", "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py")
-    ]
+    # Define the number of columns for images
+    num_columns = 4
 
-    # Butonları 2 sıra ve her sırada 3'er tane olacak şekilde düzenli bir şekilde yerleştirdik
-    for i in range(0, len(games), 3):
-        frame = tk.Frame(root)
-        frame.pack()
+    # Iterate through each image path and create corresponding labels and buttons
+    for i, image_path in enumerate(image_paths):
+        # Load the image
+        image = Image.open(image_path)
 
-        for j in range(3):
-            index = i + j
-            if index < len(games):
-                game_name, game_file = games[index]
-                button = tk.Button(frame, text=game_name, command=lambda file=game_file: run_game(file), width=20, height=2)
-                button.grid(row=i, column=j, padx=10, pady=5)
+        # Resize the image to fit into the frame
+        image.thumbnail((200, 200))
 
+        # Convert image to PhotoImage
+        photo = ImageTk.PhotoImage(image)
+
+        # Create a label to display the image
+        label = tk.Label(frame, image=photo)
+        label.grid(row=i // num_columns * 2, column=i % num_columns)
+
+        # Function to prevent garbage collection of the PhotoImage object
+        label.image = photo
+
+        # Create PLAY button for each image
+        play_button = tk.Button(frame, text="PLAY", command=lambda idx=i: play_button_clicked(idx))
+        play_button.grid(row=i // num_columns * 2 + 1, column=i % num_columns, pady=(0, 10))
+
+    # Center the frame
+    root.update_idletasks()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = (screen_width - (200 * num_columns)) // 2
+    y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 2))) // 2
+    root.geometry("900x850")
+
+    # Run the Tkinter event loop
     root.mainloop()
 
-if __name__ == "__main__":
-    try:
-        import numpy
-        import pygame
-    except ImportError:
-        print("Gerekli modül(numpy) yüklenemedi.")
-    else:
-        main()
+# Giriş ekranını oluştur
+login_window = tk.Tk()
+login_window.title("Login")
+login_window.geometry("310x200")  # Pencere boyutunu ayarla
+
+# Kullanıcı adı ve şifre girişi bileşenleri
+username_label = tk.Label(login_window, text="Username:")
+username_label.pack(pady=(10, 0))  # Yükseklik boşluğunu ayarla
+username_entry = tk.Entry(login_window)
+username_entry.pack(pady=(0, 5))  # Yükseklik boşluğunu ayarla
+
+password_label = tk.Label(login_window, text="Password:")
+password_label.pack()  # Yükseklik boşluğunu ayarla
+password_entry = tk.Entry(login_window, show="*")
+password_entry.pack(pady=(0, 5))  # Yükseklik boşluğunu ayarla
+
+login_button = tk.Button(login_window, text="Login", command=login)
+login_button.pack()  # Yükseklik boşluğunu ayarla
+
+error_label = tk.Label(login_window, fg="red")
+error_label.pack()  # Yükseklik boşluğunu ayarla
+
+# Giriş ekranını göster
+login_window.mainloop()
