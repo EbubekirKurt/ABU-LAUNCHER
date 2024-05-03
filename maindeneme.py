@@ -1,7 +1,10 @@
+import sys
 import tkinter as tk
 from PIL import Image, ImageTk
 import webbrowser
 import subprocess
+
+import pygame
 
 # Kullanıcı adı ve şifre bilgileri
 user_credentials = {
@@ -102,7 +105,7 @@ def login():
 def play_button_clicked(game_index):
     executable_path = game_details[game_index]["executable_path"]
     if executable_path:
-        subprocess.Popen(["python", executable_path])
+        subprocess.Popen([sys.executable, executable_path])
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
 
@@ -135,26 +138,28 @@ def show_images_with_play_buttons():
 
         # Create a label to display the image
         label = tk.Label(frame, image=photo)
-        label.grid(row=i // num_columns * 3, column=i % num_columns)
+        label.image = photo  # To prevent garbage collection
+        label.grid(row=i // num_columns * 4, column=i % num_columns, padx=5, pady=5)
 
-        # Function to prevent garbage collection of the PhotoImage object
-        label.image = photo
+        # Create a label for the game title
+        title_label = tk.Label(frame, text=game_info["title"], font=("Helvetica", 12, "bold"))
+        title_label.grid(row=i // num_columns * 4 + 1, column=i % num_columns, pady=(5, 0))
 
         # Create "Detaylar" button for each game
         details_button = tk.Button(frame, text="Detaylar", command=lambda idx=i: show_game_details(idx))
-        details_button.grid(row=i // num_columns * 3 + 1, column=i % num_columns, pady=(0, 5))
+        details_button.grid(row=i // num_columns * 4 + 2, column=i % num_columns, pady=(0, 5))
 
         # Create PLAY button for each game
         play_button = tk.Button(frame, text="PLAY", command=lambda idx=i: play_button_clicked(idx))
-        play_button.grid(row=i // num_columns * 3 + 2, column=i % num_columns, pady=(0, 10))
+        play_button.grid(row=i // num_columns * 4 + 3, column=i % num_columns, pady=(0, 10))
 
     # Center the frame
     root.update_idletasks()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     x = (screen_width - (200 * num_columns)) // 2
-    y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 3))) // 2
-    root.geometry("1200x650")
+    y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 4))) // 2
+    root.geometry("1200x700")
 
     # Run the Tkinter event loop
     root.mainloop()
@@ -203,3 +208,10 @@ error_label.pack()  # Yükseklik boşluğunu ayarla
 
 # Giriş ekranını göster
 login_window.mainloop()
+
+if __name__ == "__main__":
+    try:
+        import numpy
+        import pygame
+    except ImportError:
+        print("Gerekli modül(numpy) yüklenemedi.")
