@@ -19,8 +19,8 @@ def generate_password_key():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
 
 def send_email(to_address, subject, message):
-    from_address = "your_email@gmail.com"
-    password = "your_application_password"  # Uygulama şifrenizi buraya ekleyin
+    from_address = "oyunskorpythonprojesi@gmail.com"
+    password = "bjex ufup tdss xmnr"
 
     msg = MIMEMultipart()
     msg['From'] = from_address
@@ -84,7 +84,7 @@ def login():
 
     if user:
         messagebox.showinfo("Başarılı", f"Hoşgeldiniz, {user['user_name']}!")
-        login_window.destroy()  # Giriş penceresini kapat
+        root.destroy()  # Giriş penceresini kapat
         show_images_with_play_buttons()  # Menü ekranını göster
     else:
         messagebox.showerror("Hata", "Geçersiz kullanıcı adı veya şifre!")
@@ -284,27 +284,103 @@ def show_game_details(game_index):
         no_video_label = tk.Label(details_window, text="Bu oyun için bir video bulunmamaktadır.")
         no_video_label.pack(pady=5)
 
-# Giriş ekranını oluştur
-login_window = tk.Tk()
-login_window.title("Login")
-login_window.geometry("310x200")  # Pencere boyutunu ayarla
+# Tkinter arayüzü
+root = tk.Tk()
+root.title("Kullanıcı Kayıt ve Giriş")
 
-# Kullanıcı adı ve şifre girişi bileşenleri
-username_label = tk.Label(login_window, text="Username:")
-username_label.pack(pady=(10, 0))  # Yükseklik boşluğunu ayarla
-entry_login_mail = tk.Entry(login_window)
-entry_login_mail.pack(pady=(0, 5))  # Yükseklik boşluğunu ayarla
+# Kayıt Formu
+frame_register = tk.Frame(root, padx=10, pady=10)
 
-password_label = tk.Label(login_window, text="Password:")
-password_label.pack()  # Yükseklik boşluğunu ayarla
-entry_login_password = tk.Entry(login_window, show="*")
-entry_login_password.pack(pady=(0, 5))  # Yükseklik boşluğunu ayarla
+label_name = tk.Label(frame_register, text="İsim")
+label_name.grid(row=0, column=0, sticky=tk.W, pady=2)
+entry_name = tk.Entry(frame_register)
+entry_name.grid(row=0, column=1, pady=2)
 
-login_button = tk.Button(login_window, text="Login", command=login)
-login_button.pack()  # Yükseklik boşluğunu ayarla
+label_mail = tk.Label(frame_register, text="Mail")
+label_mail.grid(row=1, column=0, sticky=tk.W, pady=2)
+entry_mail = tk.Entry(frame_register)
+entry_mail.grid(row=1, column=1, pady=2)
 
-error_label = tk.Label(login_window, fg="red")
-error_label.pack()  # Yükseklik boşluğunu ayarla
+label_password = tk.Label(frame_register, text="Şifre")
+label_password.grid(row=2, column=0, sticky=tk.W, pady=2)
+entry_password = tk.Entry(frame_register, show="*")
+entry_password.grid(row=2, column=1, pady=2)
 
-# Giriş ekranını göster
-login_window.mainloop()
+label_confirm_password = tk.Label(frame_register, text="Şifre (Tekrar)")
+label_confirm_password.grid(row=3, column=0, sticky=tk.W, pady=2)
+entry_confirm_password = tk.Entry(frame_register, show="*")
+entry_confirm_password.grid(row=3, column=1, pady=2)
+
+label_emotion = tk.Label(frame_register, text="Duygu")
+label_emotion.grid(row=4, column=0, sticky=tk.W, pady=2)
+emotion_var = tk.StringVar()
+emotion_dropdown = ttk.Combobox(frame_register, textvariable=emotion_var)
+emotion_dropdown['values'] = ("Happy", "Sad", "Excited", "Angry", "Neutral")
+emotion_dropdown.grid(row=4, column=1, pady=2)
+
+label_age = tk.Label(frame_register, text="Yaş")
+label_age.grid(row=5, column=0, sticky=tk.W, pady=2)
+entry_age = tk.Entry(frame_register)
+entry_age.grid(row=5, column=1, pady=2)
+
+button_register = tk.Button(frame_register, text="Kayıt Ol", command=register)
+button_register.grid(row=6, columnspan=2, pady=10)
+
+button_show_login = tk.Button(frame_register, text="Giriş Ekranına Dön", command=show_login_frame)
+button_show_login.grid(row=7, columnspan=2)
+
+# Giriş Formu
+frame_login = tk.Frame(root, padx=10, pady=10)
+
+label_login_mail = tk.Label(frame_login, text="Mail")
+label_login_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
+entry_login_mail = tk.Entry(frame_login)
+entry_login_mail.grid(row=0, column=1, pady=2)
+
+label_login_password = tk.Label(frame_login, text="Şifre")
+label_login_password.grid(row=1, column=0, sticky=tk.W, pady=2)
+entry_login_password = tk.Entry(frame_login, show="*")
+entry_login_password.grid(row=1, column=1, pady=2)
+
+button_login = tk.Button(frame_login, text="Giriş Yap", command=login)
+button_login.grid(row=2, columnspan=2, pady=10)
+
+button_forgot_password = tk.Button(frame_login, text="Şifremi Unuttum", command=show_reset_password_frame)
+button_forgot_password.grid(row=3, columnspan=2)
+
+button_show_register = tk.Button(frame_login, text="Kayıt Ol", command=show_register_frame)
+button_show_register.grid(row=4, columnspan=2)
+
+# Şifre Sıfırlama Formu
+frame_reset_password = tk.Frame(root, padx=10, pady=10)
+
+label_reset_mail = tk.Label(frame_reset_password, text="Mail")
+label_reset_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
+entry_reset_mail = tk.Entry(frame_reset_password)
+entry_reset_mail.grid(row=0, column=1, pady=2)
+
+label_reset_key = tk.Label(frame_reset_password, text="Şifre Sıfırlama Anahtarı")
+label_reset_key.grid(row=1, column=0, sticky=tk.W, pady=2)
+entry_reset_key = tk.Entry(frame_reset_password)
+entry_reset_key.grid(row=1, column=1, pady=2)
+
+label_new_password = tk.Label(frame_reset_password, text="Yeni Şifre")
+label_new_password.grid(row=2, column=0, sticky=tk.W, pady=2)
+entry_new_password = tk.Entry(frame_reset_password, show="*")
+entry_new_password.grid(row=2, column=1, pady=2)
+
+label_confirm_new_password = tk.Label(frame_reset_password, text="Yeni Şifre (Tekrar)")
+label_confirm_new_password.grid(row=3, column=0, sticky=tk.W, pady=2)
+entry_confirm_new_password = tk.Entry(frame_reset_password, show="*")
+entry_confirm_new_password.grid(row=3, column=1, pady=2)
+
+button_reset_password = tk.Button(frame_reset_password, text="Şifreyi Sıfırla", command=reset_password)
+button_reset_password.grid(row=4, columnspan=2, pady=10)
+
+button_show_login_from_reset = tk.Button(frame_reset_password, text="Giriş Ekranına Dön", command=show_login_frame)
+button_show_login_from_reset.grid(row=5, columnspan=2)
+
+# Uygulama başladığında login ekranını göster
+show_login_frame()
+
+root.mainloop()
