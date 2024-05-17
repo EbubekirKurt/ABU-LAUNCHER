@@ -128,16 +128,16 @@ def reset_password():
 
 # Oyunların görüntülerinin yol listesi
 image_paths = [
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/2048-game.png",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
+    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
 ]
 
 # Oyunların detayları listesi
@@ -146,31 +146,31 @@ game_details = [
         "title": "2048",
         "description": "Bu popüler sayı bulmaca oyununda 2048 sayısını oluşturun!",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/2048.py"
     },
     {
         "title": "Angry Birds",
         "description": "Domuzlara karşı kuşlarınızı fırlatın ve seviyeleri geçin.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
     },
     {
         "title": "Connect 4",
         "description": "Dört aynı rengin yatay, dikey veya çapraz hizalanmasını sağlayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/connect4.py"
     },
     {
         "title": "Connect 4 (Yapay Zeka Karşı)",
         "description": "Yapay zekaya karşı Connect 4 oynayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/connect4withai.py"
     },
     {
         "title": "Flappy Bird",
         "description": "Engeller arasından geçerek mümkün olduğunca uzağa uçun.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/FlappyBird.py"
     },
     {
         "title": "Remember Me",
@@ -182,25 +182,25 @@ game_details = [
         "title": "Sudoku",
         "description": "Sayı bulmacalarını çözerek beyninizi zorlayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/sudoku.py"
     },
     {
         "title": "Tetris",
         "description": "Blokları düşürerek tam sıralar oluşturun ve puan kazanın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/tetris.py"
     },
     {
         "title": "Baloon Shooter",
         "description": "Hedefteki balonları vurarak puan kazanın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/BaloonShooter.py"
     },
     {
         "title": "Pong",
         "description": "Klasik Pong oyununu oyna ve rakibini yen!",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/Pong.py"
+        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/Pong.py"
     }
 ]
 
