@@ -1,10 +1,9 @@
+import subprocess
 import sys
 import tkinter as tk
-from PIL import Image, ImageTk
 import webbrowser
-import subprocess
 
-import pygame
+from PIL import Image, ImageTk
 
 # Kullanıcı adı ve şifre bilgileri
 user_credentials = {
@@ -90,6 +89,7 @@ game_details = [
     }
 ]
 
+
 def login():
     username = username_entry.get()
     password = password_entry.get()
@@ -108,6 +108,7 @@ def play_button_clicked(game_index):
         subprocess.Popen([sys.executable, executable_path])
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
+
 
 def show_images_with_play_buttons():
     # Create the main window
@@ -164,6 +165,7 @@ def show_images_with_play_buttons():
     # Run the Tkinter event loop
     root.mainloop()
 
+
 def show_game_details(game_index):
     details_window = tk.Toplevel()
     details_window.title("Oyun Detayları")
@@ -177,12 +179,14 @@ def show_game_details(game_index):
 
     youtube_url = game_details[game_index]["youtube_url"]
     if youtube_url:
-        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue", cursor="hand2")
+        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue",
+                               cursor="hand2")
         video_label.pack(pady=5)
         video_label.bind("<Button-1>", lambda event, url=youtube_url: webbrowser.open(url))
     else:
         no_video_label = tk.Label(details_window, text="Bu oyun için bir video bulunmamaktadır.")
         no_video_label.pack(pady=5)
+
 
 # Giriş ekranını oluştur
 login_window = tk.Tk()
