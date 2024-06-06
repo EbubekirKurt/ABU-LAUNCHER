@@ -12,22 +12,22 @@ from level import Level
 pygame.init()
 screen = pygame.display.set_mode((1200, 650))
 redbird = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/red-bird3.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/red-bird3.png").convert_alpha()
 background2 = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/background3.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/background3.png").convert_alpha()
 sling_image = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/sling-3.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/sling-3.png").convert_alpha()
 full_sprite = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/full-sprite.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/full-sprite.png").convert_alpha()
 rect = pygame.Rect(181, 1050, 50, 50)
 cropped = full_sprite.subsurface(rect).copy()
 pig_image = pygame.transform.scale(cropped, (30, 30))
 buttons = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/selected-buttons.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/selected-buttons.png").convert_alpha()
 pig_happy = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/pig_failed.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/pig_failed.png").convert_alpha()
 stars = pygame.image.load(
-    "C:/Users/90541/PycharmProjects/OyunSkor/img/stars-edited.png").convert_alpha()
+    "C:/Users/ebube/PycharmProjects/OyunSkor/img/stars-edited.png").convert_alpha()
 rect = pygame.Rect(0, 0, 200, 200)
 star1 = stars.subsurface(rect).copy()
 rect = pygame.Rect(204, 0, 200, 200)
@@ -134,7 +134,7 @@ def distance(xo, yo, x, y):
 
 def load_music():
     """Load the music"""
-    song1 = 'C:/Users/90541/PycharmProjects/OyunSkor/img/OyunMuzikleri/angry-birds.ogg'
+    song1 = 'C:/Users/ebube/PycharmProjects/OyunSkor/img/OyunMuzikleri/angry-birds.ogg'
     pygame.mixer.music.load(song1)
     pygame.mixer.music.play(-1)
 

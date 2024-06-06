@@ -1,386 +1,341 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
-import webbrowser
-import subprocess
-from pymongo import MongoClient
-import random
-import string
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import random, pygame, sys
+from pygame.locals import *
+from random import randint
+import copy
+import math
 
-# MongoDB bağlantısı
-client = MongoClient("mongodb://localhost:27017/")
-db = client["OyunSkorPythonProject"]
-users_collection = db["users"]
+# defining the window size and other different specifications of the window
+FPS = 5
+WINDOWWIDTH = 640
+WINDOWHEIGHT = 640
+boxsize = min(WINDOWWIDTH, WINDOWHEIGHT) // 4;
+margin = 5
+thickness = 0
+# defining the RGB for various colours used
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+DARKGREEN = (0, 155, 0)
+DARKGRAY = (40, 40, 40)
+LIGHTSALMON = (255, 160, 122)
+ORANGE = (221, 118, 7)
+LIGHTORANGE = (227, 155, 78)
+CORAL = (255, 127, 80)
+BLUE = (0, 0, 255)
+LIGHTBLUE = (0, 0, 150)
+colorback = (189, 174, 158)
+colorblank = (205, 193, 180)
+colorlight = (249, 246, 242)
+colordark = (119, 110, 101)
 
-def generate_password_key():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+fontSize = [100, 85, 70, 55, 40]
 
-def send_email(to_address, subject, message):
-    from_address = "oyunskorpythonprojesi@gmail.com"
-    password = "bjex ufup tdss xmnr"
+dictcolor1 = {
+    0: colorblank,
+    2: (238, 228, 218),
+    4: (237, 224, 200),
+    8: (242, 177, 121),
+    16: (245, 149, 99),
+    32: (246, 124, 95),
+    64: (246, 95, 59),
+    128: (237, 207, 114),
+    256: (237, 204, 97),
+    512: (237, 200, 80),
+    1024: (237, 197, 63),
+    2048: (237, 194, 46),
+    4096: (237, 190, 30),
+    8192: (239, 180, 25)}
 
-    msg = MIMEMultipart()
-    msg['From'] = from_address
-    msg['To'] = to_address
-    msg['Subject'] = subject
+dictcolor2 = {
+    2: colordark,
+    4: colordark,
+    8: colorlight,
+    16: colorlight,
+    32: colorlight,
+    64: colorlight,
+    128: colorlight,
+    256: colorlight,
+    512: colorlight,
+    1024: colorlight,
+    2048: colorlight,
+    4096: colorlight,
+    8192: colorlight}
+BGCOLOR = LIGHTORANGE
+UP = 'up'
+DOWN = 'down'
+LEFT = 'left'
+RIGHT = 'right'
 
-    msg.attach(MIMEText(message, 'plain'))
+TABLE = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(from_address, password)
-        text = msg.as_string()
-        server.sendmail(from_address, to_address, text)
-        server.quit()
-        return True
-    except Exception as e:
-        print(f"Hata: {e}")
-        return False
 
-def register():
-    user_name = entry_name.get()
-    user_mail = entry_mail.get()
-    password = entry_password.get()
-    confirm_password = entry_confirm_password.get()
-    user_emotion = emotion_var.get()
-    user_age = entry_age.get()
+def main():
+    global FPSCLOCK, screen, BASICFONT
 
-    if password != confirm_password:
-        messagebox.showerror("Hata", "Şifreler uyuşmuyor!")
-        return
+    pygame.init()
+    FPSCLOCK = pygame.time.Clock()
+    screen = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    BASICFONT = pygame.font.Font('freesansbold.ttf', 18)
+    pygame.display.set_caption('2048')
 
-    password_key = generate_password_key()
+    showStartScreen()
 
-    user_data = {
-        "user_name": user_name,
-        "user_mail": user_mail,
-        "password": password,
-        "user_emotion": user_emotion,
-        "user_age": int(user_age),
-        "user_password_key": password_key
-    }
+    while True:
+        runGame(TABLE)
+        gameover()
 
-    users_collection.insert_one(user_data)
 
-    subject = "Kayıt Başarılı - Şifre Anahtarınız"
-    message = f"Merhaba {user_name},\n\nKayıt işleminiz başarılı. Şifre sıfırlama anahtarınız: {password_key}\n\nİyi günler dileriz."
-
-    if send_email(user_mail, subject, message):
-        messagebox.showinfo("Başarılı", "Kayıt başarılı ve e-posta gönderildi!")
+def createButton(text, x, y, width, height, action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x + width > mouse[0] > x and y + height > mouse[1] > y:
+        pygame.draw.rect(screen, LIGHTBLUE, (x, y, width, height))
+        if click[0] == 1 and action != None:
+            action()
     else:
-        messagebox.showerror("Hata", "Kayıt başarılı ancak e-posta gönderilemedi.")
+        pygame.draw.rect(screen, BLUE, (x, y, width, height))
 
-    show_login_frame()
+    smallText = pygame.font.Font('freesansbold.ttf', 50)
+    TextSurf = smallText.render(text, True, WHITE)
+    TextRect = TextSurf.get_rect()
+    TextRect.center = ((x + (width / 2)), (y + (height / 2)))
+    screen.blit(TextSurf, TextRect)
 
-def login():
-    user_mail = entry_login_mail.get()
-    password = entry_login_password.get()
 
-    user = users_collection.find_one({"user_mail": user_mail, "password": password})
+def showStartScreen():
+    # the start screen
+    titleFont = pygame.font.Font('freesansbold.ttf', 100)
+    titleSurf1 = titleFont.render('2048', True, WHITE, ORANGE)
 
-    if user:
-        messagebox.showinfo("Başarılı", f"Hoşgeldiniz, {user['user_name']}!")
-        root.destroy()  # Giriş penceresini kapat
-        show_images_with_play_buttons()  # Menü ekranını göster
+    while True:
+        screen.fill(BGCOLOR)
+        display_rect = pygame.transform.rotate(titleSurf1, 0)
+        rectangle = display_rect.get_rect()
+        rectangle.center = (WINDOWWIDTH / 2, WINDOWHEIGHT / 8)
+        screen.blit(display_rect, rectangle)
+
+        createButton("NEW GAME", 80, 180, 480, 80, newGame)
+        createButton("HIGHSCORE", 80, 340, 480, 80, leaderboard)
+        createButton("QUIT", 80, 500, 480, 80, terminate)
+
+        if checkForKeyPress():
+            pygame.event.get()
+            return
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+
+def newGame():
+    runGame(TABLE)
+
+
+def randomfill(TABLE):
+    # search for zero in the game table and randomly fill the places
+    flatTABLE = sum(TABLE, [])
+    if 0 not in flatTABLE:
+        return TABLE
+    empty = False
+    w = 0
+    while not empty:
+        w = randint(0, 15)
+        if TABLE[w // 4][w % 4] == 0:
+            empty = True
+    z = randint(1, 5)
+    if z == 5:
+        TABLE[w // 4][w % 4] = 4
     else:
-        messagebox.showerror("Hata", "Geçersiz kullanıcı adı veya şifre!")
+        TABLE[w // 4][w % 4] = 2
+    return TABLE
 
-def show_login_frame():
-    frame_register.pack_forget()
-    frame_reset_password.pack_forget()
-    frame_login.pack()
 
-def show_register_frame():
-    frame_login.pack_forget()
-    frame_reset_password.pack_forget()
-    frame_register.pack()
+def gameOver(TABLE):
+    # returns False if a box is empty or two boxes can be merged
+    x = [-1, 0, 1, 0]
+    y = [0, 1, 0, -1]
+    for pi in range(4):
+        for pj in range(4):
+            if TABLE[pi][pj] == 0:
+                return False
+            for point in range(4):
+                if pi + x[point] > -1 and pi + x[point] < 4 and pj + y[point] > -1 and pj + y[point] < 4 and TABLE[pi][
+                    pj] == TABLE[pi + x[point]][pj + y[point]]:
+                    return False
+    return True
 
-def show_reset_password_frame():
-    frame_login.pack_forget()
-    frame_register.pack_forget()
-    frame_reset_password.pack()
 
-def reset_password():
-    user_mail = entry_reset_mail.get()
-    password_key = entry_reset_key.get()
-    new_password = entry_new_password.get()
-    confirm_new_password = entry_confirm_new_password.get()
+def showGameOverMessage():
+    # to show game over screen
+    titleFont = pygame.font.Font('freesansbold.ttf', 60)
+    titleSurf1 = titleFont.render('Game Over', True, WHITE, ORANGE)
+    showMainMenu()
 
-    if new_password != confirm_new_password:
-        messagebox.showerror("Hata", "Yeni şifreler uyuşmuyor!")
-        return
+    while True:
+        screen.fill(BGCOLOR)
+        display_rect = pygame.transform.rotate(titleSurf1, 0)
+        rectangle = display_rect.get_rect()
+        rectangle.center = (WINDOWWIDTH / 2, WINDOWHEIGHT / 2)
+        screen.blit(display_rect, rectangle)
 
-    user = users_collection.find_one({"user_mail": user_mail, "user_password_key": password_key})
+        showMainMenu()
+        pygame.display.update()
+        if checkForKeyPress():
+            if len(pygame.event.get()) > 0:
+                main()
+        FPSCLOCK.tick(FPS)
 
-    if user:
-        users_collection.update_one(
-            {"user_mail": user_mail},
-            {"$set": {"password": new_password}}
-        )
-        messagebox.showinfo("Başarılı", "Şifre başarıyla güncellendi!")
-        show_login_frame()
-    else:
-        messagebox.showerror("Hata", "Geçersiz e-posta veya şifre sıfırlama anahtarı!")
 
-# Oyunların görüntülerinin yol listesi
-image_paths = [
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-]
+def showMainMenu():
+    # to display main menu
+    pressKeySurf = BASICFONT.render('Press a key for main menu', True, WHITE)
+    pressKeyRect = pressKeySurf.get_rect()
+    pressKeyRect.topleft = (WINDOWWIDTH - 250, WINDOWHEIGHT - 30)
+    screen.blit(pressKeySurf, pressKeyRect)
 
-# Oyunların detayları listesi
-game_details = [
-    {
-        "title": "2048",
-        "description": "Bu popüler sayı bulmaca oyununda 2048 sayısını oluşturun!",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"
-    },
-    {
-        "title": "Angry Birds",
-        "description": "Domuzlara karşı kuşlarınızı fırlatın ve seviyeleri geçin.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
-    },
-    {
-        "title": "Connect 4",
-        "description": "Dört aynı rengin yatay, dikey veya çapraz hizalanmasını sağlayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"
-    },
-    {
-        "title": "Connect 4 (Yapay Zeka Karşı)",
-        "description": "Yapay zekaya karşı Connect 4 oynayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"
-    },
-    {
-        "title": "Flappy Bird",
-        "description": "Engeller arasından geçerek mümkün olduğunca uzağa uçun.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"
-    },
-    {
-        "title": "Remember Me",
-        "description": "Daha sonra eklenecek.",
-        "youtube_url": "",
-        "executable_path": ""
-    },
-    {
-        "title": "Sudoku",
-        "description": "Sayı bulmacalarını çözerek beyninizi zorlayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"
-    },
-    {
-        "title": "Tetris",
-        "description": "Blokları düşürerek tam sıralar oluşturun ve puan kazanın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"
-    },
-    {
-        "title": "Baloon Shooter",
-        "description": "Hedefteki balonları vurarak puan kazanın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"
-    },
-    {
-        "title": "Pong",
-        "description": "Klasik Pong oyununu oyna ve rakibini yen!",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/Pong.py"
-    }
-]
 
-def play_button_clicked(game_index):
-    executable_path = game_details[game_index]["executable_path"]
-    if executable_path:
-        subprocess.Popen(["python", executable_path])
-    else:
-        print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
+def checkForKeyPress():
+    # checking if a key is pressed or not
+    if len(pygame.event.get(QUIT)) > 0:
+        terminate()
 
-def show_images_with_play_buttons():
-    # Create the main window
-    root = tk.Tk()
-    root.title("Game Console Developed by Ebubekir Kurt")
+    keyUpEvents = pygame.event.get(KEYUP)
+    if len(keyUpEvents) == 0:
+        return None
+    if keyUpEvents[0].key == K_ESCAPE:
+        terminate()
+    return keyUpEvents[0].key
 
-    # Welcome label
-    welcome_label = tk.Label(root, text="Hoşgeldin. Oynamak istediğin oyunu seç.", font=("Helvetica", 14))
-    welcome_label.pack(pady=(10, 20))
 
-    # Create a frame to hold the images and buttons
-    frame = tk.Frame(root)
-    frame.pack(padx=10, pady=10)
+def show(TABLE):
+    # showing the table
+    screen.fill(colorback)
+    myfont = pygame.font.SysFont("Arial", 60, bold=True)
+    for i in range(4):
+        for j in range(4):
+            pygame.draw.rect(screen, dictcolor1[TABLE[i][j]], (j * boxsize + margin,
+                                                               i * boxsize + margin,
+                                                               boxsize - 2 * margin,
+                                                               boxsize - 2 * margin),
+                             thickness)
+            if TABLE[i][j] != 0:
+                order = int(math.log10(TABLE[i][j]))
+                myfont = pygame.font.SysFont("Arial", fontSize[order], bold=True)
+                label = myfont.render("%4s" % (TABLE[i][j]), 1, dictcolor2[TABLE[i][j]])
+                screen.blit(label, (j * boxsize + 2 * margin, i * boxsize + 9 * margin))
 
-    # Define the number of columns for images
-    num_columns = 5
+    pygame.display.update()
 
-    # Iterate through each game and create corresponding labels and buttons
-    for i, game_info in enumerate(game_details):
-        # Load the image
-        image = Image.open(image_paths[i])
 
-        # Resize the image to fit into the frame
-        image.thumbnail((200, 200))
+def runGame(TABLE):
+    TABLE = randomfill(TABLE)
+    TABLE = randomfill(TABLE)
+    show(TABLE)
+    running = True
 
-        # Convert image to PhotoImage
-        photo = ImageTk.PhotoImage(image)
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                print
+                "quit"
+                pygame.quit();
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if running:
+                    desired_key = None
+                    if event.key == pygame.K_UP: desired_key = "w"
+                    if event.key == pygame.K_DOWN: desired_key = "s"
+                    if event.key == pygame.K_LEFT: desired_key = "a"
+                    if event.key == pygame.K_RIGHT: desired_key = "d"
 
-        # Create a label to display the image
-        label = tk.Label(frame, image=photo)
-        label.grid(row=i // num_columns * 3, column=i % num_columns)
+                    if desired_key is None:
+                        continue
 
-        # Function to prevent garbage collection of the PhotoImage object
-        label.image = photo
+                    new_table = key(desired_key, copy.deepcopy(TABLE))
+                    if new_table != TABLE:
+                        TABLE = randomfill(new_table)
+                        show(TABLE)
+                    if gameOver(TABLE):
+                        showGameOverMessage()
 
-        # Create "Detaylar" button for each game
-        details_button = tk.Button(frame, text="Detaylar", command=lambda idx=i: show_game_details(idx))
-        details_button.grid(row=i // num_columns * 3 + 1, column=i % num_columns, pady=(0, 5))
 
-        # Create PLAY button for each game
-        play_button = tk.Button(frame, text="PLAY", command=lambda idx=i: play_button_clicked(idx))
-        play_button.grid(row=i // num_columns * 3 + 2, column=i % num_columns, pady=(0, 10))
+def key(DIRECTION, TABLE):
+    if DIRECTION == 'w':
+        for pi in range(1, 4):
+            for pj in range(4):
+                if TABLE[pi][pj] != 0: TABLE = moveup(pi, pj, TABLE)
+    elif DIRECTION == 's':
+        for pi in range(2, -1, -1):
+            for pj in range(4):
+                if TABLE[pi][pj] != 0: TABLE = movedown(pi, pj, TABLE)
+    elif DIRECTION == 'a':
+        for pj in range(1, 4):
+            for pi in range(4):
+                if TABLE[pi][pj] != 0: TABLE = moveleft(pi, pj, TABLE)
+    elif DIRECTION == 'd':
+        for pj in range(2, -1, -1):
+            for pi in range(4):
+                if TABLE[pi][pj] != 0: TABLE = moveright(pi, pj, TABLE)
+    return TABLE
 
-    # Center the frame
-    root.update_idletasks()
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    x = (screen_width - (200 * num_columns)) // 2
-    y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 3))) // 2
-    root.geometry("1200x650")
 
-    # Run the Tkinter event loop
-    root.mainloop()
+def movedown(pi, pj, T):
+    justcomb = False
+    while pi < 3 and (T[pi + 1][pj] == 0 or (T[pi + 1][pj] == T[pi][pj] and not justcomb)):
+        if T[pi + 1][pj] == 0:
+            T[pi + 1][pj] = T[pi][pj]
+        elif T[pi + 1][pj] == T[pi][pj]:
+            T[pi + 1][pj] += T[pi][pj]
+            justcomb = True
+        T[pi][pj] = 0
+        pi += 1
+    return T
 
-def show_game_details(game_index):
-    details_window = tk.Toplevel()
-    details_window.title("Oyun Detayları")
-    details_window.geometry("400x250")
 
-    title_label = tk.Label(details_window, text=game_details[game_index]["title"], font=("Helvetica", 16, "bold"))
-    title_label.pack(pady=(10, 5))
+def moveleft(pi, pj, T):
+    justcomb = False
+    while pj > 0 and (T[pi][pj - 1] == 0 or (T[pi][pj - 1] == T[pi][pj] and not justcomb)):
+        if T[pi][pj - 1] == 0:
+            T[pi][pj - 1] = T[pi][pj]
+        elif T[pi][pj - 1] == T[pi][pj]:
+            T[pi][pj - 1] += T[pi][pj]
+            justcomb = True
+        T[pi][pj] = 0
+        pj -= 1
+    return T
 
-    description_label = tk.Label(details_window, text=game_details[game_index]["description"], wraplength=380)
-    description_label.pack(pady=5)
 
-    youtube_url = game_details[game_index]["youtube_url"]
-    if youtube_url:
-        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue", cursor="hand2")
-        video_label.pack(pady=5)
-        video_label.bind("<Button-1>", lambda event, url=youtube_url: webbrowser.open(url))
-    else:
-        no_video_label = tk.Label(details_window, text="Bu oyun için bir video bulunmamaktadır.")
-        no_video_label.pack(pady=5)
+def moveright(pi, pj, T):
+    justcomb = False
+    while pj < 3 and (T[pi][pj + 1] == 0 or (T[pi][pj + 1] == T[pi][pj] and not justcomb)):
+        if T[pi][pj + 1] == 0:
+            T[pi][pj + 1] = T[pi][pj]
+        elif T[pi][pj + 1] == T[pi][pj]:
+            T[pi][pj + 1] += T[pi][pj]
+            justcomb = True
+        T[pi][pj] = 0
+        pj += 1
+    return T
 
-# Tkinter arayüzü
-root = tk.Tk()
-root.title("Kullanıcı Kayıt ve Giriş")
 
-# Kayıt Formu
-frame_register = tk.Frame(root, padx=10, pady=10)
+def moveup(pi, pj, T):
+    justcomb = False
+    while pi > 0 and (T[pi - 1][pj] == 0 or (T[pi - 1][pj] == T[pi][pj] and not justcomb)):
+        if T[pi - 1][pj] == 0:
+            T[pi - 1][pj] = T[pi][pj]
+        elif T[pi - 1][pj] == T[pi][pj]:
+            T[pi - 1][pj] += T[pi][pj]
+            justcomb = True
+        T[pi][pj] = 0
+        pi -= 1
+    return T
 
-label_name = tk.Label(frame_register, text="İsim")
-label_name.grid(row=0, column=0, sticky=tk.W, pady=2)
-entry_name = tk.Entry(frame_register)
-entry_name.grid(row=0, column=1, pady=2)
 
-label_mail = tk.Label(frame_register, text="Mail")
-label_mail.grid(row=1, column=0, sticky=tk.W, pady=2)
-entry_mail = tk.Entry(frame_register)
-entry_mail.grid(row=1, column=1, pady=2)
+def leaderboard():
+    s = 'to show leaderboard'
 
-label_password = tk.Label(frame_register, text="Şifre")
-label_password.grid(row=2, column=0, sticky=tk.W, pady=2)
-entry_password = tk.Entry(frame_register, show="*")
-entry_password.grid(row=2, column=1, pady=2)
 
-label_confirm_password = tk.Label(frame_register, text="Şifre (Tekrar)")
-label_confirm_password.grid(row=3, column=0, sticky=tk.W, pady=2)
-entry_confirm_password = tk.Entry(frame_register, show="*")
-entry_confirm_password.grid(row=3, column=1, pady=2)
+def terminate():
+    pygame.quit()
+    sys.exit()
 
-label_emotion = tk.Label(frame_register, text="Duygu")
-label_emotion.grid(row=4, column=0, sticky=tk.W, pady=2)
-emotion_var = tk.StringVar()
-emotion_dropdown = ttk.Combobox(frame_register, textvariable=emotion_var)
-emotion_dropdown['values'] = ("Happy", "Sad", "Excited", "Angry", "Neutral")
-emotion_dropdown.grid(row=4, column=1, pady=2)
-
-label_age = tk.Label(frame_register, text="Yaş")
-label_age.grid(row=5, column=0, sticky=tk.W, pady=2)
-entry_age = tk.Entry(frame_register)
-entry_age.grid(row=5, column=1, pady=2)
-
-button_register = tk.Button(frame_register, text="Kayıt Ol", command=register)
-button_register.grid(row=6, columnspan=2, pady=10)
-
-button_show_login = tk.Button(frame_register, text="Giriş Ekranına Dön", command=show_login_frame)
-button_show_login.grid(row=7, columnspan=2)
-
-# Giriş Formu
-frame_login = tk.Frame(root, padx=10, pady=10)
-
-label_login_mail = tk.Label(frame_login, text="Mail")
-label_login_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
-entry_login_mail = tk.Entry(frame_login)
-entry_login_mail.grid(row=0, column=1, pady=2)
-
-label_login_password = tk.Label(frame_login, text="Şifre")
-label_login_password.grid(row=1, column=0, sticky=tk.W, pady=2)
-entry_login_password = tk.Entry(frame_login, show="*")
-entry_login_password.grid(row=1, column=1, pady=2)
-
-button_login = tk.Button(frame_login, text="Giriş Yap", command=login)
-button_login.grid(row=2, columnspan=2, pady=10)
-
-button_forgot_password = tk.Button(frame_login, text="Şifremi Unuttum", command=show_reset_password_frame)
-button_forgot_password.grid(row=3, columnspan=2)
-
-button_show_register = tk.Button(frame_login, text="Kayıt Ol", command=show_register_frame)
-button_show_register.grid(row=4, columnspan=2)
-
-# Şifre Sıfırlama Formu
-frame_reset_password = tk.Frame(root, padx=10, pady=10)
-
-label_reset_mail = tk.Label(frame_reset_password, text="Mail")
-label_reset_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
-entry_reset_mail = tk.Entry(frame_reset_password)
-entry_reset_mail.grid(row=0, column=1, pady=2)
-
-label_reset_key = tk.Label(frame_reset_password, text="Şifre Sıfırlama Anahtarı")
-label_reset_key.grid(row=1, column=0, sticky=tk.W, pady=2)
-entry_reset_key = tk.Entry(frame_reset_password)
-entry_reset_key.grid(row=1, column=1, pady=2)
-
-label_new_password = tk.Label(frame_reset_password, text="Yeni Şifre")
-label_new_password.grid(row=2, column=0, sticky=tk.W, pady=2)
-entry_new_password = tk.Entry(frame_reset_password, show="*")
-entry_new_password.grid(row=2, column=1, pady=2)
-
-label_confirm_new_password = tk.Label(frame_reset_password, text="Yeni Şifre (Tekrar)")
-label_confirm_new_password.grid(row=3, column=0, sticky=tk.W, pady=2)
-entry_confirm_new_password = tk.Entry(frame_reset_password, show="*")
-entry_confirm_new_password.grid(row=3, column=1, pady=2)
-
-button_reset_password = tk.Button(frame_reset_password, text="Şifreyi Sıfırla", command=reset_password)
-button_reset_password.grid(row=4, columnspan=2, pady=10)
-
-button_show_login_from_reset = tk.Button(frame_reset_password, text="Giriş Ekranına Dön", command=show_login_frame)
-button_show_login_from_reset.grid(row=5, columnspan=2)
-
-# Uygulama başladığında login ekranını göster
-show_login_frame()
-
-root.mainloop()
+main()
