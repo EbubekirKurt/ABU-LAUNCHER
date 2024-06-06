@@ -148,6 +148,10 @@ image_paths = [
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/chess.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/snake.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/8ballpool.jpg",
+
 ]
 
 # Oyunların detayları listesi
@@ -211,7 +215,26 @@ game_details = [
         "description": "Klasik Pong oyununu oyna ve rakibini yen!",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
         "executable_path": "Pong.py"
+    },
+    {
+        "title": "Chess",
+        "description": "Satranç oyunları yüzyıllardır oynanan bir strateji oyunudur.",
+        "youtube_url": "https://www.youtube.com/watch?v=",
+        "executable_path": "chess/chess.py"
+    },
+    {
+        "title": "Classic Snake",
+        "description": "Yılan oyunu.",
+        "youtube_url": "https://www.youtube.com/watch?",
+        "executable_path": "snake.py"
+    },
+    {
+        "title": "8 Ball Pool",
+        "description": "Bilardo oyunu.",
+        "youtube_url": "https://www.youtube.com/watch?",
+        "executable_path": "8ballpool.py"
     }
+
 ]
 
 

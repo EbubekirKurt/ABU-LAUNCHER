@@ -83,7 +83,6 @@ def main():
 
     while True:
         runGame(TABLE)
-        gameover()
 
 
 def createButton(text, x, y, width, height, action=None):
