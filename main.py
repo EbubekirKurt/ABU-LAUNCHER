@@ -285,7 +285,7 @@ def show_images_with_play_buttons():
         details_button.grid(row=i // num_columns * 3 + 1, column=i % num_columns, pady=(0, 5))
 
         # Create PLAY button for each game
-        play_button = tk.Button(frame, text="PLAY", command=lambda idx=i: play_button_clicked(idx))
+        play_button = tk.Button(frame, text="OYNA!", command=lambda idx=i: play_button_clicked(idx))
         play_button.grid(row=i // num_columns * 3 + 2, column=i % num_columns, pady=(0, 10))
 
     # Center the frame
