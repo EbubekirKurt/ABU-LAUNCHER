@@ -1,9 +1,11 @@
-import tkinter as tk
 import subprocess
 import sys
+import tkinter as tk
+
 
 def run_game(game_file):
     subprocess.Popen([sys.executable, game_file])
+
 
 def main():
     root = tk.Tk()
@@ -19,9 +21,9 @@ def main():
     games = [
         ("Connect 4", "connect4.py"),
         ("Connect 4 against AI", "connect4withai.py"),
-        ("2048 Oyunu","2048.py"),
-        ("Sudoku","Sudoku.py"),
-        ("Flappy Bird","FlappyBird.py"),
+        ("2048 Oyunu", "2048.py"),
+        ("Sudoku", "Sudoku.py"),
+        ("Flappy Bird", "FlappyBird.py"),
         ("Angry Birds", "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py")
     ]
 
@@ -34,10 +36,12 @@ def main():
             index = i + j
             if index < len(games):
                 game_name, game_file = games[index]
-                button = tk.Button(frame, text=game_name, command=lambda file=game_file: run_game(file), width=20, height=2)
+                button = tk.Button(frame, text=game_name, command=lambda file=game_file: run_game(file), width=20,
+                                   height=2)
                 button.grid(row=i, column=j, padx=10, pady=5)
 
     root.mainloop()
+
 
 if __name__ == "__main__":
     try:

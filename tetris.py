@@ -1,5 +1,6 @@
-import pygame
 import random
+
+import pygame
 
 """
 10 x 20 square grid
@@ -201,7 +202,7 @@ def draw_text_middle(text, size, color, surface):
     label = font.render(text, 1, color)
 
     surface.blit(label, (
-    top_left_x + play_width / 2 - (label.get_width() / 2), top_left_y + play_height / 2 - label.get_height() / 2))
+        top_left_x + play_width / 2 - (label.get_width() / 2), top_left_y + play_height / 2 - label.get_height() / 2))
 
 
 def draw_grid(surface, row, col):
@@ -396,9 +397,3 @@ win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
 
 main_menu()  # start game
-
-
-
-
-
-

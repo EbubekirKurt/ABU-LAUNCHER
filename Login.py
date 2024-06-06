@@ -1,22 +1,25 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
-import webbrowser
-import subprocess
-from pymongo import MongoClient
 import random
-import string
 import smtplib
+import string
+import subprocess
+import tkinter as tk
+import webbrowser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from tkinter import ttk, messagebox
+
+from PIL import Image, ImageTk
+from pymongo import MongoClient
 
 # MongoDB bağlantısı
 client = MongoClient("mongodb://localhost:27017/")
 db = client["OyunSkorPythonProject"]
 users_collection = db["users"]
 
+
 def generate_password_key():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
 
 def send_email(to_address, subject, message):
     from_address = "oyunskorpythonprojesi@gmail.com"
@@ -40,6 +43,7 @@ def send_email(to_address, subject, message):
     except Exception as e:
         print(f"Hata: {e}")
         return False
+
 
 def register():
     user_name = entry_name.get()
@@ -76,6 +80,7 @@ def register():
 
     show_login_frame()
 
+
 def login():
     user_mail = entry_login_mail.get()
     password = entry_login_password.get()
@@ -89,20 +94,24 @@ def login():
     else:
         messagebox.showerror("Hata", "Geçersiz kullanıcı adı veya şifre!")
 
+
 def show_login_frame():
     frame_register.pack_forget()
     frame_reset_password.pack_forget()
     frame_login.pack()
+
 
 def show_register_frame():
     frame_login.pack_forget()
     frame_reset_password.pack_forget()
     frame_register.pack()
 
+
 def show_reset_password_frame():
     frame_login.pack_forget()
     frame_register.pack_forget()
     frame_reset_password.pack()
+
 
 def reset_password():
     user_mail = entry_reset_mail.get()
@@ -125,6 +134,7 @@ def reset_password():
         show_login_frame()
     else:
         messagebox.showerror("Hata", "Geçersiz e-posta veya şifre sıfırlama anahtarı!")
+
 
 # Oyunların görüntülerinin yol listesi
 image_paths = [
@@ -204,12 +214,14 @@ game_details = [
     }
 ]
 
+
 def play_button_clicked(game_index):
     executable_path = game_details[game_index]["executable_path"]
     if executable_path:
         subprocess.Popen(["python", executable_path])
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
+
 
 def show_images_with_play_buttons():
     # Create the main window
@@ -264,6 +276,7 @@ def show_images_with_play_buttons():
     # Run the Tkinter event loop
     root.mainloop()
 
+
 def show_game_details(game_index):
     details_window = tk.Toplevel()
     details_window.title("Oyun Detayları")
@@ -277,12 +290,14 @@ def show_game_details(game_index):
 
     youtube_url = game_details[game_index]["youtube_url"]
     if youtube_url:
-        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue", cursor="hand2")
+        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue",
+                               cursor="hand2")
         video_label.pack(pady=5)
         video_label.bind("<Button-1>", lambda event, url=youtube_url: webbrowser.open(url))
     else:
         no_video_label = tk.Label(details_window, text="Bu oyun için bir video bulunmamaktadır.")
         no_video_label.pack(pady=5)
+
 
 # Tkinter arayüzü
 root = tk.Tk()

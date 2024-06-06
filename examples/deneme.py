@@ -1,8 +1,9 @@
 import subprocess
-import sys
 import tkinter as tk
 import webbrowser
 
+import cv2
+import pafy
 from PIL import Image, ImageTk
 
 # Kullanıcı adı ve şifre bilgileri
@@ -30,31 +31,31 @@ game_details = [
     {
         "title": "2048",
         "description": "Bu popüler sayı bulmaca oyununda 2048 sayısını oluşturun!",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"
     },
     {
         "title": "Angry Birds",
         "description": "Domuzlara karşı kuşlarınızı fırlatın ve seviyeleri geçin.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
     },
     {
         "title": "Connect 4",
         "description": "Dört aynı rengin yatay, dikey veya çapraz hizalanmasını sağlayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"
     },
     {
         "title": "Connect 4 (Yapay Zeka Karşı)",
         "description": "Yapay zekaya karşı Connect 4 oynayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"
     },
     {
         "title": "Flappy Bird",
         "description": "Engeller arasından geçerek mümkün olduğunca uzağa uçun.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"
     },
     {
@@ -66,25 +67,25 @@ game_details = [
     {
         "title": "Sudoku",
         "description": "Sayı bulmacalarını çözerek beyninizi zorlayın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"
     },
     {
         "title": "Tetris",
         "description": "Blokları düşürerek tam sıralar oluşturun ve puan kazanın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"
     },
     {
         "title": "Baloon Shooter",
         "description": "Hedefteki balonları vurarak puan kazanın.",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"
     },
     {
         "title": "Pong",
         "description": "Klasik Pong oyununu oyna ve rakibini yen!",
-        "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
+        "youtube_url": "https://www.youtube.com/watch?v=-rqRWzSP2iM&pp=ygUNMjA0OCB0dXRvcmlhbA%3D%3D",
         "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/Pong.py"
     }
 ]
@@ -105,7 +106,7 @@ def login():
 def play_button_clicked(game_index):
     executable_path = game_details[game_index]["executable_path"]
     if executable_path:
-        subprocess.Popen([sys.executable, executable_path])
+        subprocess.Popen(["python", executable_path])
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
 
@@ -139,20 +140,42 @@ def show_images_with_play_buttons():
 
         # Create a label to display the image
         label = tk.Label(frame, image=photo)
-        label.image = photo  # To prevent garbage collection
-        label.grid(row=i // num_columns * 4, column=i % num_columns, padx=5, pady=5)
+        label.grid(row=i // num_columns * 4, column=i % num_columns)
 
-        # Create a label for the game title
-        title_label = tk.Label(frame, text=game_info["title"], font=("Helvetica", 12, "bold"))
-        title_label.grid(row=i // num_columns * 4 + 1, column=i % num_columns, pady=(5, 0))
+        # Function to prevent garbage collection of the PhotoImage object
+        label.image = photo
 
         # Create "Detaylar" button for each game
         details_button = tk.Button(frame, text="Detaylar", command=lambda idx=i: show_game_details(idx))
-        details_button.grid(row=i // num_columns * 4 + 2, column=i % num_columns, pady=(0, 5))
+        details_button.grid(row=i // num_columns * 4 + 1, column=i % num_columns, pady=(0, 5))
 
         # Create PLAY button for each game
         play_button = tk.Button(frame, text="PLAY", command=lambda idx=i: play_button_clicked(idx))
-        play_button.grid(row=i // num_columns * 4 + 3, column=i % num_columns, pady=(0, 10))
+        play_button.grid(row=i // num_columns * 4 + 2, column=i % num_columns, pady=(0, 5))
+
+        # Create video frame for each game
+        video_frame = tk.Frame(frame, width=200, height=100)
+        video_frame.grid(row=i // num_columns * 4 + 3, column=i % num_columns, pady=(0, 5))
+
+        # Display video if available
+        youtube_url = game_details[i]["youtube_url"]
+        if youtube_url:
+            video_url = youtube_url
+            video = pafy.new(video_url)
+            best = video.getbest(preftype="mp4")
+            video_url = best.url
+            cap = cv2.VideoCapture(video_url)
+            _, frame = cap.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = Image.fromarray(frame)
+            frame.thumbnail((200, 100))
+            video_photo = ImageTk.PhotoImage(frame)
+            video_label = tk.Label(video_frame, image=video_photo)
+            video_label.image = video_photo
+            video_label.pack()
+        else:
+            no_video_label = tk.Label(video_frame, text="Video Yok")
+            no_video_label.pack()
 
     # Center the frame
     root.update_idletasks()
@@ -160,7 +183,7 @@ def show_images_with_play_buttons():
     screen_height = root.winfo_screenheight()
     x = (screen_width - (200 * num_columns)) // 2
     y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 4))) // 2
-    root.geometry("1200x700")
+    root.geometry("1200x600")
 
     # Run the Tkinter event loop
     root.mainloop()
@@ -212,10 +235,3 @@ error_label.pack()  # Yükseklik boşluğunu ayarla
 
 # Giriş ekranını göster
 login_window.mainloop()
-
-if __name__ == "__main__":
-    try:
-        import numpy
-        import pygame
-    except ImportError:
-        print("Gerekli modül(numpy) yüklenemedi.")

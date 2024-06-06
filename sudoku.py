@@ -1,5 +1,6 @@
-import turtle
 import random
+import turtle
+
 
 def setWorld():
     turtle.setworldcoordinates(-100, -100, 100, 100)

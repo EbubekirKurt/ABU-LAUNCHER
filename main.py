@@ -1,22 +1,25 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
-import webbrowser
-import subprocess
-from pymongo import MongoClient
 import random
-import string
 import smtplib
+import string
+import subprocess
+import tkinter as tk
+import webbrowser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from tkinter import ttk, messagebox
+
+from PIL import Image, ImageTk
+from pymongo import MongoClient
 
 # MongoDB bağlantısı
 client = MongoClient("mongodb://localhost:27017/")
 db = client["OyunSkorPythonProject"]
 users_collection = db["users"]
 
+
 def generate_password_key():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
 
 def send_email(to_address, subject, message):
     from_address = "oyunskorpythonprojesi@gmail.com"
@@ -40,6 +43,7 @@ def send_email(to_address, subject, message):
     except Exception as e:
         print(f"Hata: {e}")
         return False
+
 
 def register():
     user_name = entry_name.get()
@@ -76,6 +80,7 @@ def register():
 
     show_login_frame()
 
+
 def login():
     user_mail = entry_login_mail.get()
     password = entry_login_password.get()
@@ -89,20 +94,24 @@ def login():
     else:
         messagebox.showerror("Hata", "Geçersiz kullanıcı adı veya şifre!")
 
+
 def show_login_frame():
     frame_register.pack_forget()
     frame_reset_password.pack_forget()
     frame_login.pack()
+
 
 def show_register_frame():
     frame_login.pack_forget()
     frame_reset_password.pack_forget()
     frame_register.pack()
 
+
 def show_reset_password_frame():
     frame_login.pack_forget()
     frame_register.pack_forget()
     frame_reset_password.pack()
+
 
 def reset_password():
     user_mail = entry_reset_mail.get()
@@ -126,18 +135,19 @@ def reset_password():
     else:
         messagebox.showerror("Hata", "Geçersiz e-posta veya şifre sıfırlama anahtarı!")
 
+
 # Oyunların görüntülerinin yol listesi
 image_paths = [
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/2048-game.png",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
 ]
 
 # Oyunların detayları listesi
@@ -146,31 +156,31 @@ game_details = [
         "title": "2048",
         "description": "Bu popüler sayı bulmaca oyununda 2048 sayısını oluşturun!",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/2048.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/2048.py"
     },
     {
         "title": "Angry Birds",
         "description": "Domuzlara karşı kuşlarınızı fırlatın ve seviyeleri geçin.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/AngryBirdsOyunu/AngryBirds.py"
     },
     {
         "title": "Connect 4",
         "description": "Dört aynı rengin yatay, dikey veya çapraz hizalanmasını sağlayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/connect4.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4.py"
     },
     {
         "title": "Connect 4 (Yapay Zeka Karşı)",
         "description": "Yapay zekaya karşı Connect 4 oynayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/connect4withai.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/connect4withai.py"
     },
     {
         "title": "Flappy Bird",
         "description": "Engeller arasından geçerek mümkün olduğunca uzağa uçun.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/FlappyBird.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/FlappyBird.py"
     },
     {
         "title": "Remember Me",
@@ -182,27 +192,28 @@ game_details = [
         "title": "Sudoku",
         "description": "Sayı bulmacalarını çözerek beyninizi zorlayın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/sudoku.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/sudoku.py"
     },
     {
         "title": "Tetris",
         "description": "Blokları düşürerek tam sıralar oluşturun ve puan kazanın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/tetris.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/tetris.py"
     },
     {
         "title": "Baloon Shooter",
         "description": "Hedefteki balonları vurarak puan kazanın.",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/BaloonShooter.py"
+        "executable_path": "C:/Users/90541/PycharmProjects/OyunSkor/BaloonShooter.py"
     },
     {
         "title": "Pong",
         "description": "Klasik Pong oyununu oyna ve rakibini yen!",
         "youtube_url": "https://www.youtube.com/watch?v=6FQDXpNtwts",
-        "executable_path": "C:/Users/ebube/PycharmProjects/OyunSkor/Pong.py"
+        "executable_path": "Pong.py"
     }
 ]
+
 
 def play_button_clicked(game_index):
     executable_path = game_details[game_index]["executable_path"]
@@ -210,6 +221,7 @@ def play_button_clicked(game_index):
         subprocess.Popen(["python", executable_path])
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
+
 
 def show_images_with_play_buttons():
     # Create the main window
@@ -264,6 +276,7 @@ def show_images_with_play_buttons():
     # Run the Tkinter event loop
     root.mainloop()
 
+
 def show_game_details(game_index):
     details_window = tk.Toplevel()
     details_window.title("Oyun Detayları")
@@ -277,12 +290,14 @@ def show_game_details(game_index):
 
     youtube_url = game_details[game_index]["youtube_url"]
     if youtube_url:
-        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue", cursor="hand2")
+        video_label = tk.Label(details_window, text="Oyun Videosu", font=("Helvetica", 12, "underline"), fg="blue",
+                               cursor="hand2")
         video_label.pack(pady=5)
         video_label.bind("<Button-1>", lambda event, url=youtube_url: webbrowser.open(url))
     else:
         no_video_label = tk.Label(details_window, text="Bu oyun için bir video bulunmamaktadır.")
         no_video_label.pack(pady=5)
+
 
 # Tkinter arayüzü
 root = tk.Tk()
@@ -296,22 +311,22 @@ label_name.grid(row=0, column=0, sticky=tk.W, pady=2)
 entry_name = tk.Entry(frame_register)
 entry_name.grid(row=0, column=1, pady=2)
 
-label_mail = tk.Label(frame_register, text="Mail")
+label_mail = tk.Label(frame_register, text="Mail :")
 label_mail.grid(row=1, column=0, sticky=tk.W, pady=2)
 entry_mail = tk.Entry(frame_register)
 entry_mail.grid(row=1, column=1, pady=2)
 
-label_password = tk.Label(frame_register, text="Şifre")
+label_password = tk.Label(frame_register, text="Şifre :")
 label_password.grid(row=2, column=0, sticky=tk.W, pady=2)
 entry_password = tk.Entry(frame_register, show="*")
 entry_password.grid(row=2, column=1, pady=2)
 
-label_confirm_password = tk.Label(frame_register, text="Şifre (Tekrar)")
+label_confirm_password = tk.Label(frame_register, text="Şifre (Tekrar) :")
 label_confirm_password.grid(row=3, column=0, sticky=tk.W, pady=2)
 entry_confirm_password = tk.Entry(frame_register, show="*")
 entry_confirm_password.grid(row=3, column=1, pady=2)
 
-label_emotion = tk.Label(frame_register, text="Duygu")
+label_emotion = tk.Label(frame_register, text="Duygu :")
 label_emotion.grid(row=4, column=0, sticky=tk.W, pady=2)
 emotion_var = tk.StringVar()
 emotion_dropdown = ttk.Combobox(frame_register, textvariable=emotion_var)
@@ -332,12 +347,12 @@ button_show_login.grid(row=7, columnspan=2)
 # Giriş Formu
 frame_login = tk.Frame(root, padx=10, pady=10)
 
-label_login_mail = tk.Label(frame_login, text="Mail")
+label_login_mail = tk.Label(frame_login, text="Mail :")
 label_login_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
 entry_login_mail = tk.Entry(frame_login)
 entry_login_mail.grid(row=0, column=1, pady=2)
 
-label_login_password = tk.Label(frame_login, text="Şifre")
+label_login_password = tk.Label(frame_login, text="Şifre :")
 label_login_password.grid(row=1, column=0, sticky=tk.W, pady=2)
 entry_login_password = tk.Entry(frame_login, show="*")
 entry_login_password.grid(row=1, column=1, pady=2)
@@ -359,17 +374,17 @@ label_reset_mail.grid(row=0, column=0, sticky=tk.W, pady=2)
 entry_reset_mail = tk.Entry(frame_reset_password)
 entry_reset_mail.grid(row=0, column=1, pady=2)
 
-label_reset_key = tk.Label(frame_reset_password, text="Şifre Sıfırlama Anahtarı")
+label_reset_key = tk.Label(frame_reset_password, text="Şifre Sıfırlama Anahtarı :")
 label_reset_key.grid(row=1, column=0, sticky=tk.W, pady=2)
 entry_reset_key = tk.Entry(frame_reset_password)
 entry_reset_key.grid(row=1, column=1, pady=2)
 
-label_new_password = tk.Label(frame_reset_password, text="Yeni Şifre")
+label_new_password = tk.Label(frame_reset_password, text="Yeni Şifre :")
 label_new_password.grid(row=2, column=0, sticky=tk.W, pady=2)
 entry_new_password = tk.Entry(frame_reset_password, show="*")
 entry_new_password.grid(row=2, column=1, pady=2)
 
-label_confirm_new_password = tk.Label(frame_reset_password, text="Yeni Şifre (Tekrar)")
+label_confirm_new_password = tk.Label(frame_reset_password, text="Yeni Şifre (Tekrar) :")
 label_confirm_new_password.grid(row=3, column=0, sticky=tk.W, pady=2)
 entry_confirm_new_password = tk.Entry(frame_reset_password, show="*")
 entry_confirm_new_password.grid(row=3, column=1, pady=2)
@@ -384,3 +399,5 @@ button_show_login_from_reset.grid(row=5, columnspan=2)
 show_login_frame()
 
 root.mainloop()
+
+
