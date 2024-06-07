@@ -148,10 +148,10 @@ image_paths = [
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/chess.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/snake.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/8ballpool.jpg",
-
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
 ]
 
 # Oyunların detayları listesi
@@ -233,6 +233,12 @@ game_details = [
         "description": "Bilardo oyunu.",
         "youtube_url": "https://www.youtube.com/watch?",
         "executable_path": "8ballpool.py"
+    },
+    {
+        "title": "Poligon",
+        "description": "Poligon oyunu.",
+        "youtube_url": "https://www.youtube.com/watch?",
+        "executable_path": "ShootingGallery/poligon.py"
     }
 
 ]
@@ -294,7 +300,7 @@ def show_images_with_play_buttons():
     screen_height = root.winfo_screenheight()
     x = (screen_width - (200 * num_columns)) // 2
     y = (screen_height - (200 * ((len(image_paths) + num_columns - 1) // num_columns * 3))) // 2
-    root.geometry("1200x650")
+    root.geometry("1200x950")
 
     # Run the Tkinter event loop
     root.mainloop()
