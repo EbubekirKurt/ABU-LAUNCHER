@@ -23,8 +23,8 @@ pipe_frequency = 1500  # milliseconds
 last_pipe = pygame.time.get_ticks() - pipe_frequency
 
 # load images
-bg = pygame.image.load('C:/Users/ebube/PycharmProjects/OyunSkor/img/bg.png')
-ground_img = pygame.image.load('C:/Users/ebube/PycharmProjects/OyunSkor/img/ground.png')
+bg = pygame.image.load('C:/Users/90541/PycharmProjects/OyunSkor/img/bg.png')
+ground_img = pygame.image.load('C:/Users/90541/PycharmProjects/OyunSkor/img/ground.png')
 
 
 class Bird(pygame.sprite.Sprite):
@@ -34,7 +34,7 @@ class Bird(pygame.sprite.Sprite):
         self.index = 0
         self.counter = 0
         for num in range(1, 4):
-            img = pygame.image.load(f'C:/Users/ebube/PycharmProjects/OyunSkor/img/bird{num}.png')
+            img = pygame.image.load(f'C:/Users/90541/PycharmProjects/OyunSkor/img/bird{num}.png')
             self.images.append(img)
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
@@ -80,7 +80,7 @@ class Bird(pygame.sprite.Sprite):
 class Pipe(pygame.sprite.Sprite):
     def __init__(self, x, y, position):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('C:/Users/ebube/PycharmProjects/OyunSkor/img/pipe.png')
+        self.image = pygame.image.load('C:/Users/90541/PycharmProjects/OyunSkor/img/pipe.png')
         self.rect = self.image.get_rect()
         # position 1 is from the top, -1 is from the bottom
         if position == 1:

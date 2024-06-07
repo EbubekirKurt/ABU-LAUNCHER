@@ -7,6 +7,8 @@ import webbrowser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from tkinter import ttk, messagebox
+import sys
+import os
 
 from PIL import Image, ImageTk
 from pymongo import MongoClient
@@ -138,21 +140,22 @@ def reset_password():
 
 # Oyunların görüntülerinin yol listesi
 image_paths = [
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/2048-game.png",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
-    "C:/Users/ebube/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #chess
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #snake
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #8ballpool
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #target practice
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #car racing
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
+    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
+    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+
+    "static/images/chess.jpg", #chess
+    "static/images/snake.jpg", #snake
+    "static/images/8ballpool.jpg", #8ballpool
+    "ShootingGallery/assets/menus/mainMenu.png", #target practice
+    "CarRacing/app.png", #car racing
 
 ]
 
@@ -255,9 +258,11 @@ game_details = [
 def play_button_clicked(game_index):
     executable_path = game_details[game_index]["executable_path"]
     if executable_path:
-        subprocess.Popen(["python", executable_path])
+        python_executable = sys.executable  # Get the current Python interpreter
+        subprocess.Popen([python_executable, executable_path], env=os.environ.copy())
     else:
         print("Bu oyun için yürütülebilir bir dosya bulunamadı.")
+
 
 
 def show_images_with_play_buttons():
