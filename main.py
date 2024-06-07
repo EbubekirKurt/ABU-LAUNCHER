@@ -148,11 +148,12 @@ image_paths = [
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #chess
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #snake
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #8ballpool
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #target practice
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg", #car racing
 
 ]
 
