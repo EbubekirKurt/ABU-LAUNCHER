@@ -140,17 +140,16 @@ def reset_password():
 
 # Oyunların görüntülerinin yol listesi
 image_paths = [
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/2048-game.png",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/angrybirds.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/connect4againstai.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/flappy_bird.jpeg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/rememberme.jpg",
-    "C:/Users/90541/PycharmProjects/OyunSkor/static/images/sudoku_logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/tetris-logo.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/BaloonShooter.png",
-    "c:/Users/90541/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
-
+    "static/images/2048-game.png",
+    "static/images/angrybirds.jpeg",
+    "static/images/connect4.jpeg",
+    "static/images/connect4againstai.jpeg",
+    "static/images/flappy_bird.jpeg",
+    "static/images/rememberme.jpg",
+    "static/images/sudoku_logo.png",
+    "static/images/tetris-logo.png",
+    "static/images/BaloonShooter.png",
+    "static/images/pingpong.jpg",
     "static/images/chess.jpg", #chess
     "static/images/snake.jpg", #snake
     "static/images/8ballpool.jpg", #8ballpool
