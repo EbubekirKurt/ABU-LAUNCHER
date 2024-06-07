@@ -36,7 +36,7 @@ select_car = font.render('Select Car', True, WHITE)
 
 # IMAGES **********************************************************************
 
-bg = pygame.image.load('CarRacing/CarRacing/Assets/bg.png')
+bg = pygame.image.load('CarRacing/Assets/bg.png')
 
 home_img = pygame.image.load('CarRacing/Assets/home.png')
 play_img = pygame.image.load('CarRacing/Assets/buttons/play.png')
@@ -85,13 +85,13 @@ sound_btn = Button(sound_on_img, (24, 24), WIDTH - WIDTH // 4 - 18, HEIGHT - 80)
 
 # SOUNDS **********************************************************************
 
-click_fx = pygame.mixer.Sound('Sounds/click.mp3')
-fuel_fx = pygame.mixer.Sound('Sounds/fuel.wav')
-start_fx = pygame.mixer.Sound('Sounds/start.mp3')
-restart_fx = pygame.mixer.Sound('Sounds/restart.mp3')
-coin_fx = pygame.mixer.Sound('Sounds/coin.mp3')
+click_fx = pygame.mixer.Sound('CarRacing/Sounds/click.mp3')
+fuel_fx = pygame.mixer.Sound('CarRacing/Sounds/fuel.wav')
+start_fx = pygame.mixer.Sound('CarRacing/Sounds/start.mp3')
+restart_fx = pygame.mixer.Sound('CarRacing/Sounds/restart.mp3')
+coin_fx = pygame.mixer.Sound('CarRacing/Sounds/coin.mp3')
 
-pygame.mixer.music.load('Sounds/mixkit-tech-house-vibes-130.mp3')
+pygame.mixer.music.load('CarRacing/Sounds/mixkit-tech-house-vibes-130.mp3')
 pygame.mixer.music.play(loops=-1)
 pygame.mixer.music.set_volume(0.6)
 

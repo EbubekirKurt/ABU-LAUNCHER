@@ -246,7 +246,7 @@ game_details = [
         "title": "Car Racing",
         "description": "Poligon oyunu.",
         "youtube_url": "https://www.youtube.com/watch?",
-        "executable_path": "Car Racing/car_racing.py"
+        "executable_path": "CarRacing/car_racing.py"
     }
 
 ]
