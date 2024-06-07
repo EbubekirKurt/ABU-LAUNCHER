@@ -152,6 +152,8 @@ image_paths = [
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
     "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+    "c:/Users/ebube/PycharmProjects/OyunSkor/static/images/pingpong.jpg",
+
 ]
 
 # Oyunların detayları listesi
@@ -239,6 +241,12 @@ game_details = [
         "description": "Poligon oyunu.",
         "youtube_url": "https://www.youtube.com/watch?",
         "executable_path": "ShootingGallery/poligon.py"
+    },
+    {
+        "title": "Car Racing",
+        "description": "Poligon oyunu.",
+        "youtube_url": "https://www.youtube.com/watch?",
+        "executable_path": "Car Racing/car_racing.py"
     }
 
 ]
